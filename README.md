@@ -1,5 +1,5 @@
 
-```markdown
+
 # Simple Java Dependency Injection (DI) Container
 
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://java.com)
@@ -95,5 +95,5 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 ## License
 
 [MIT](LICENSE)
-```
+
 
