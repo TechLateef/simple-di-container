@@ -3,6 +3,7 @@ package mine.framework.server;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import mine.framework.utils.JsonUtil;
 
 import java.io.OutputStream;
 import java.lang.reflect.Method;
@@ -46,13 +47,15 @@ public class HttpServerWrapper {
                 if ("POST".equalsIgnoreCase(methodType) && controllerMethod.getParameterCount() == 1) {
                     // Read the body
                     String body = new String(exchange.getRequestBody().readAllBytes());
-                    // Assume method has a single String parameter
-                    result = controllerMethod.invoke(controller, body);
+                 Class<?> paramType= controllerMethod.getParameterTypes()[0];
+                 Object deserializeInput = JsonUtil.fromJson(body, paramType);
+                 result = controllerMethod.invoke(controller, deserializeInput);
                 } else {
                     //No parameters (GET or no-body POST)
                     result = controllerMethod.invoke(controller);
                 }
-                sendResponse(exchange, 200, result.toString());
+                String responseJson = JsonUtil.toJson(result);
+                sendResponse(exchange, 200, responseJson);
 
             } catch (Exception e) {
                 e.printStackTrace();

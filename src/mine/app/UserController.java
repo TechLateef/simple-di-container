@@ -1,6 +1,7 @@
 package mine.app;
 
 import mine.Inject;
+import mine.app.dto.HelloDto;
 import mine.framework.annotations.Controller;
 import mine.framework.annotations.Get;
 import mine.framework.annotations.Post;
@@ -17,7 +18,11 @@ public class UserController {
     }
 
     @Post("/hello")
-    public String postHello(String body) {
-        return "POSTED: " + body;
+    public HelloDto postHello(HelloDto dto) {
+        dto.setName("Hello " + dto.getName());
+        dto.setAge(dto.getAge() + 1);
+        return dto;
     }
+
+
 }
